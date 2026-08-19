@@ -316,6 +316,104 @@
   @media(max-width:520px){
     .ranks{grid-template-columns:1fr}
   }
+
+  /* ===== FLOWCHART ===== */
+  .flowchart{
+    display:flex;flex-direction:column;align-items:center;gap:0;
+    padding:24px 8px;
+  }
+  .flow-step{
+    display:flex;flex-direction:column;align-items:center;gap:6px;
+    position:relative;
+  }
+  .flow-step:not(:last-child)::after{
+    content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);
+    width:2px;height:28px;background:var(--line);
+    background:linear-gradient(180deg,var(--line),transparent);
+  }
+  .flow-node{
+    display:flex;flex-direction:column;align-items:center;gap:4px;
+    padding:14px 18px;border-radius:16px;
+    min-width:180px;max-width:280px;
+    border:2px solid var(--ink);
+    box-shadow:4px 4px 0 var(--ink);
+    background:var(--card);
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .flow-node:hover{transform:translateY(-2px);box-shadow:6px 6px 0 var(--ink)}
+  .flow-node.action{border-color:var(--cyan);box-shadow:4px 4px 0 var(--cyan)}
+  .flow-node.action:hover{box-shadow:6px 6px 0 var(--cyan)}
+  .flow-node.decision{border-color:var(--pink);box-shadow:4px 4px 0 var(--pink)}
+  .flow-node.decision:hover{box-shadow:6px 6px 0 var(--pink)}
+  .flow-node.measure{border-color:var(--amber);box-shadow:4px 4px 0 var(--amber)}
+  .flow-node.measure:hover{box-shadow:6px 6px 0 var(--amber)}
+  .flow-node.winner{border-color:var(--lime);box-shadow:4px 4px 0 var(--lime);background:var(--lime);color:var(--ink)}
+  .flow-node.winner:hover{box-shadow:6px 6px 0 var(--lime)}
+  .flow-node.done{opacity:.65}
+  .flow-node.done .step-num{background:var(--lime);color:var(--ink)}
+  .step-icon{font-size:28px;line-height:1}
+  .step-title{font-family:var(--font-display);font-size:15px;text-align:center;letter-spacing:-.01em;text-transform:uppercase}
+  .step-sub{font-size:12px;color:var(--muted);text-align:center;max-width:240px}
+  .flow-node.winner .step-sub{color:rgba(20,16,24,.7)}
+  .step-num{
+    position:absolute;top:-10px;left:50%;transform:translateX(-50%);
+    width:28px;height:28px;border-radius:50%;
+    background:var(--ink);color:#fff;
+    font-family:var(--font-display);font-size:12px;
+    display:grid;place-items:center;
+    border:3px solid var(--card);z-index:2;
+  }
+  .flow-node.action .step-num{background:var(--cyan);color:var(--ink)}
+  .flow-node.decision .step-num{background:var(--pink);color:#fff}
+  .flow-node.measure .step-num{background:var(--amber);color:var(--ink)}
+  .flow-node.winner .step-num{background:var(--ink);color:var(--lime)}
+  .step-meta{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:4px;font-size:11px}
+  .step-meta span{
+    background:rgba(0,0,0,.06);border-radius:100px;padding:2px 8px;font-weight:600;
+  }
+  .flow-node.winner .step-meta span{background:rgba(20,16,24,.15)}
+  .legend-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+  .legend-item{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600}
+  .legend-dot{width:12px;height:12px;border-radius:50%;flex:none}
+  .principle-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  .p-card{background:var(--card);border:2px solid var(--ink);border-radius:14px;padding:14px 16px;box-shadow:4px 4px 0 var(--ink)}
+  .p-card.good{border-color:var(--cyan);box-shadow:4px 4px 0 var(--cyan);background:var(--cyan-soft)}
+  .p-card.warn{border-color:var(--pink);box-shadow:4px 4px 0 var(--pink);background:var(--pink-soft)}
+  .p-tag{font-size:18px;display:block;margin-bottom:4px}
+  .p-card strong{display:block;font-size:13px;line-height:1.4;margin-bottom:4px}
+  .p-card small{color:var(--muted);font-weight:600;font-size:11px}
+  @media(max-width:480px){
+    .legend-grid{grid-template-columns:1fr}
+    .principle-cards{grid-template-columns:1fr}
+    .flow-node{min-width:150px;padding:12px 14px}
+    .step-title{font-size:13.5px}
+  }
+
+  /* ===== DASHBOARD ===== */
+  .dash-header{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}
+  .dash-stats{display:flex;gap:12px;flex-wrap:wrap}
+  .stat{background:var(--card);border:2px solid var(--ink);border-radius:12px;padding:10px 16px;text-align:center;box-shadow:3px 3px 0 var(--ink);min-width:80px}
+  .stat b{display:block;font-family:var(--font-display);font-size:22px;line-height:1.2}
+  .stat span{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+  .dash-actions{display:flex;gap:8px}
+  .dash-step{
+    background:var(--card);border:2px solid var(--ink);border-radius:14px;padding:14px 16px;margin:10px 0;box-shadow:var(--shadow);
+    transition:all .18s ease;
+  }
+  .dash-step.done{box-shadow:6px 6px 0 var(--lime);opacity:.7}
+  .dash-step-header{display:flex;align-items:flex-start;gap:12px;cursor:pointer}
+  .dash-step .tbox{flex:none;width:26px;height:26px;border-radius:8px;border:2.5px solid var(--ink);display:grid;place-items:center;color:transparent;font-weight:900;font-size:14px;transition:all .15s}
+  .dash-step input[type="checkbox"]{display:none}
+  .dash-step input[type="checkbox"]:checked + .tbox{background:var(--cyan);color:#fff}
+  .dash-step-content{flex:1;min-width:0}
+  .dash-step-title{font-family:var(--font-display);font-size:16px;letter-spacing:-.01em;margin-bottom:2px}
+  .dash-step-meta{display:flex;gap:8px;flex-wrap:wrap;font-size:11.5px;margin-top:4px}
+  .dash-step-meta span{background:rgba(0,0,0,.05);border-radius:100px;padding:2px 8px;font-weight:600}
+  .dash-step-desc{font-size:13px;color:var(--muted);margin-top:6px;line-height:1.5}
+  .dash-step-target{font-size:12.5px;font-weight:700;margin-top:6px;padding:8px 10px;background:var(--violet-soft);border-radius:10px;text-align:center}
+  .dash-step-target input{width:60px;border:2px solid var(--ink);border-radius:8px;padding:4px 8px;text-align:center;font-family:var(--font-body);font-size:12.5px;background:#fff;color:var(--ink)}
+  .dash-step-notes{margin-top:10px;padding-top:10px;border-top:1.5px dashed var(--line)}
+  .dash-step-notes textarea{width:100%;min-height:60px;resize:vertical;border:2px solid var(--ink);border-radius:10px;padding:8px 10px;font-family:var(--font-body);font-size:13px;background:#faf6f0;color:var(--ink)}
   @media print{
     body{background:#fff;padding:0}
     .lesson-body{max-height:none!important}
@@ -377,6 +475,71 @@
 
   <div class="section-label">Challenge · 30 jours</div>
   <div class="weeks" id="weeks"></div>
+
+  <div class="section-label">Système de contenu</div>
+
+  <!-- ===== FLOWCHART INTERACTIF ===== -->
+  <div class="lesson" style="margin-top:0">
+    <button class="lesson-head" type="button" aria-expanded="true">
+      <span class="lvl-num" style="background:linear-gradient(135deg,var(--pink),var(--violet))">🔄</span>
+      <span class="lesson-titles"><span class="lv">Workflow</span><span class="lt">Flux complet : Niche → Winner</span></span>
+      <span class="chev" aria-hidden="true">▼</span>
+    </button>
+    <div class="lesson-body" style="max-height:none">
+      <div class="lesson-body-inner">
+        <div id="flowchart" class="flowchart"></div>
+
+        <div class="flow-legend">
+          <h5 style="font-family:var(--font-display);text-transform:uppercase;font-size:12px;letter-spacing:.08em;color:var(--muted);margin:16px 0 8px">Légende</h5>
+          <div class="legend-grid">
+            <div class="legend-item"><span class="legend-dot" style="background:var(--cyan)"></span><span>Étape actionnable</span></div>
+            <div class="legend-item"><span class="legend-dot" style="background:var(--pink)"></span><span>Point de décision</span></div>
+            <div class="legend-item"><span class="legend-dot" style="background:var(--amber)"></span><span>Mesure / Analytics</span></div>
+            <div class="legend-item"><span class="legend-dot" style="background:var(--lime)"></span><span>Résultat / Winner</span></div>
+          </div>
+        </div>
+
+        <div class="flow-principles">
+          <h5 style="font-family:var(--font-display);text-transform:uppercase;font-size:12px;letter-spacing:.08em;color:var(--muted);margin:18px 0 8px">Principes</h5>
+          <div class="principle-cards">
+            <div class="p-card good"><span class="p-tag">✅</span><strong>Learn → Build → Test → Measure → Automate</strong><br><small>Itère, mesure, puis automatise ce qui marche</small></div>
+            <div class="p-card warn"><span class="p-tag">❌</span><strong>Automate → Spam → Hope</strong><br><small>Automatiser sans comprendre = bruit, pas signal</small></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== DASHBOARD DE TRACKING ===== -->
+  <div class="lesson" style="margin-top:16px">
+    <button class="lesson-head" type="button" aria-expanded="false" id="dashHead">
+      <span class="lvl-num" style="background:var(--cyan)">📊</span>
+      <span class="lesson-titles"><span class="lv">Dashboard</span><span class="lt">Suivi étape par étape — Projet en cours</span></span>
+      <span class="chev" aria-hidden="true">▼</span>
+    </button>
+    <div class="lesson-body" id="dashBody">
+      <div class="lesson-body-inner">
+        <div class="dash-header">
+          <div class="dash-stats">
+            <div class="stat"><b id="dashTotal">0</b><span>étapes actives</span></div>
+            <div class="stat"><b id="dashDone">0</b><span>terminées</span></div>
+            <div class="stat"><b id="dashPct">0%</b><span>progression</span></div>
+          </div>
+          <div class="dash-actions">
+            <button class="sync-btn" id="dashReset" title="Réinitialiser ce projet"><span>↺</span> Reset</button>
+            <button class="sync-btn primary" id="dashExport">📊 Export CSV</button>
+          </div>
+        </div>
+
+        <div class="dash-steps" id="dashSteps"></div>
+
+        <div class="dash-notes" id="dashNotes" style="display:none;margin-top:16px;padding-top:16px;border-top:2px dashed var(--line)">
+          <h5 style="font-family:var(--font-display);text-transform:uppercase;font-size:12px;letter-spacing:.08em;color:var(--muted);margin-bottom:8px">📝 Notes du projet</h5>
+          <textarea id="projectNotes" placeholder="Tes observations, idées, décisions… (sauvegardé auto)" style="width:100%;min-height:100px;resize:vertical;border:2px solid var(--ink);border-radius:12px;padding:10px 12px;font-family:var(--font-body);font-size:14px;background:#faf6f0;color:var(--ink)"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div class="section-label">Tes rangs à débloquer</div>
   <div class="ranks">
@@ -838,9 +1001,161 @@ window.addEventListener("resize",()=>{
   },150);
 });
 
-updateProgress(false);
+// ===== FLOWCHART & DASHBOARD DATA & LOGIC =====
+const FLOW_STEPS = [
+  {id:"niche", num:1, type:"action", icon:"🎯", title:"1 Niche", sub:"Choisis un sujet précis pour une audience précise", meta:["3 questions test","Score /5"]},
+  {id:"products", num:2, type:"action", icon:"🛍️", title:"10 Produits", sub:"Trouve 10 produits faciles à montrer + utiles + accessibles", meta:["5 critères /5","Score /25"]},
+  {id:"ideas", num:3, type:"decision", icon:"💡", title:"20 Idées", sub:"Pour chaque produit : 2 hooks × 2 angles = 4 idées", meta:["Hook + Format","Variantes"]},
+  {id:"scripts", num:4, type:"action", icon:"✍️", title:"10 Scripts", sub:"Structure : Hook → Problème → Solution → Démo → CTA", meta:["< 30 sec","1 idée = 1 script"]},
+  {id:"videos", num:5, type:"action", icon:"🎬", title:"10 Vidéos", sub:"Montage mobile : clips → texte → voix → audio → vérif", meta:["Workflow 6 étapes","Vertical 9:16"]},
+  {id:"publish", num:6, type:"decision", icon:"📤", title:"Publication", sub:"SEO titre + hashtags + cover + heure optimale", meta:["10 recherches mappées","CTA clair"]},
+  {id:"analytics", num:7, type:"measure", icon:"📊", title:"Analytics", sub:"Views · Watch time · Clicks · Orders · Commission", meta:["Fiche par vidéo","Signaux réels"]},
+  {id:"winners", num:8, type:"winner", icon:"🏆", title:"3 Winners", sub:"Top 3 contenus → relance expériences → système", meta:["Learn → Build → Test → Measure → Automate"]},
+];
 
-// ===== PWA : installable + cache hors ligne (uniquement si hébergé) =====
+const DASH_STORE_KEY = "tsa_dashboard_v1";
+let dashState = {steps:{}, notes:"", projectId:Date.now().toString(36)};
+try{const raw=localStorage.getItem(DASH_STORE_KEY); if(raw) dashState=JSON.parse(raw);}catch(e){}
+function dashSave(){try{localStorage.setItem(DASH_STORE_KEY,JSON.stringify(dashState));}catch(e){}}
+
+function renderFlowchart(){
+  const fc=document.getElementById("flowchart");
+  fc.innerHTML = FLOW_STEPS.map((s,i)=>`
+    <div class="flow-step">
+      <div class="flow-node ${s.type}${dashState.steps[s.id]?.done ? ' done' : ''}" data-step="${s.id}">
+        <span class="step-num">${s.num}</span>
+        <span class="step-icon" aria-hidden="true">${s.icon}</span>
+        <span class="step-title">${s.title}</span>
+        <span class="step-sub">${s.sub}</span>
+        <div class="step-meta">${s.meta.map(m=>`<span>${m}</span>`).join("")}</div>
+      </div>
+    </div>
+  `).join("");
+
+  fc.querySelectorAll(".flow-node").forEach(node=>{
+    node.addEventListener("click",()=>{
+      const id=node.dataset.step;
+      dashState.steps[id]=dashState.steps[id]||{};
+      dashState.steps[id].done=!dashState.steps[id].done;
+      dashSave();
+      renderFlowchart();
+      renderDashboard();
+    });
+  });
+}
+
+function renderDashboard(){
+  const ds=document.getElementById("dashSteps");
+  ds.innerHTML = FLOW_STEPS.map(s=>{
+    const st=dashState.steps[s.id]||{};
+    const done=st.done||false;
+    const target=st.target||"";
+    const notes=st.notes||"";
+    return `
+      <div class="dash-step${done?' done':''}" data-step="${s.id}">
+        <div class="dash-step-header">
+          <input type="checkbox" id="ds-${s.id}" ${done?"checked":""}>
+          <span class="tbox" aria-hidden="true">✓</span>
+          <div class="dash-step-content">
+            <div class="dash-step-title">${s.icon} ${s.title}</div>
+            <div class="dash-step-meta">${s.meta.map(m=>`<span>${m}</span>`).join("")}</div>
+            <div class="dash-step-desc">${s.sub}</div>
+            <div class="dash-step-target">Objectif quantifié : <input type="text" value="${target}" placeholder="ex: 10 produits notés /25" data-target="${s.id}"></div>
+            <div class="dash-step-notes"><textarea placeholder="Notes pour cette étape…" data-notes="${s.id}">${notes}</textarea></div>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join("");
+
+  // Stats
+  const total=FLOW_STEPS.length;
+  const done=FLOW_STEPS.filter(s=>dashState.steps[s.id]?.done).length;
+  document.getElementById("dashTotal").textContent=total;
+  document.getElementById("dashDone").textContent=done;
+  document.getElementById("dashPct").textContent=Math.round(done/total*100)+"%";
+
+  // Checkboxes
+  ds.querySelectorAll('input[type="checkbox"]').forEach(cb=>{
+    cb.addEventListener("change",()=>{
+      const id=cb.id.replace("ds-","");
+      dashState.steps[id]=dashState.steps[id]||{};
+      dashState.steps[id].done=cb.checked;
+      dashSave();
+      renderDashboard();
+      renderFlowchart();
+    });
+  });
+
+  // Target inputs
+  ds.querySelectorAll('input[data-target]').forEach(inp=>{
+    inp.addEventListener("blur",()=>{
+      const id=inp.dataset.target;
+      dashState.steps[id]=dashState.steps[id]||{};
+      dashState.steps[id].target=inp.value;
+      dashSave();
+    });
+  });
+
+  // Notes inputs
+  ds.querySelectorAll('textarea[data-notes]').forEach(ta=>{
+    ta.addEventListener("blur",()=>{
+      const id=ta.dataset.notes;
+      dashState.steps[id]=dashState.steps[id]||{};
+      dashState.steps[id].notes=ta.value;
+      dashSave();
+    });
+  });
+
+  // Project notes
+  const pn=document.getElementById("projectNotes");
+  if(pn.value!==dashState.notes) pn.value=dashState.notes;
+  pn.addEventListener("blur",()=>{dashState.notes=pn.value;dashSave()});
+  document.getElementById("dashNotes").style.display="block";
+
+  // Reset
+  document.getElementById("dashReset").onclick=()=>{
+    if(confirm("Réinitialiser TOUT le dashboard (étapes, cibles, notes) ?")){
+      dashState={steps:{}, notes:"", projectId:Date.now().toString(36)};
+      dashSave();
+      renderDashboard();
+      renderFlowchart();
+      toast("🔄 Dashboard réinitialisé");
+    }
+  };
+
+  // Export CSV
+  document.getElementById("dashExport").onclick=()=>{
+    const headers=["Étape","Type","Terminée","Objectif","Notes"];
+    const rows=FLOW_STEPS.map(s=>{
+      const st=dashState.steps[s.id]||{};
+      return [s.title,s.type,st.done?"OUI":"NON",(st.target||"").replace(/"/g,'""'),(st.notes||"").replace(/"/g,'""').replace(/\n/g," ")].map(v=>`"${v}"`).join(",");
+    });
+    const csv="\uFEFF"+[headers.join(","),...rows].join("\n");
+    const blob=new Blob([csv],{type:"text/csv;charset=utf-8"});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement("a");
+    a.href=url;a.download=`Dashboard_TikTok_${new Date().toISOString().slice(0,10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+    toast("📊 CSV exporté");
+  };
+}
+
+// Initial render
+renderFlowchart();
+renderDashboard();
+
+// Dashboard accordion
+document.getElementById("dashHead").addEventListener("click",()=>{
+  const el=document.getElementById("dashHead").closest(".lesson");
+  const body=document.getElementById("dashBody");
+  const open=el.classList.toggle("open");
+  document.getElementById("dashHead").setAttribute("aria-expanded",open?"true":"false");
+  body.style.maxHeight=open?body.scrollHeight+"px":"0";
+});
+
+updateProgress(false);
 // En file:// ou blob: (fichier .html unique), on ne tente rien : le cours reste
 // autonome et hors ligne par nature. Le service worker n'a de sens que servi via http(s).
 if("serviceWorker" in navigator && (location.protocol==="https:" || location.protocol==="http:")){
