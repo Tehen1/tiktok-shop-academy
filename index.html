@@ -731,10 +731,56 @@ const WEEKS=[
  {t:"Semaine 4 — Optimiser",tasks:["Refaire les meilleures vidéos","Tester de nouveaux hooks","Tester de nouveaux angles","Construire les premiers templates"]},
 ];
 
+// ===== LIAISON LEÇONS ↔ DASHBOARD =====
+// Mappe chaque niveau de leçon → id d'étape du dashboard
+const LESSON_TO_DASH = {
+  2: "niche",       // Niveau 2 : Trouver ta niche
+  3: "products",    // Niveau 3 : 10 produits
+  6: "ideas",       // Niveau 6 : 5 hooks + 3 idées + 2 CTA → idées
+  8: "ideas",       // Niveau 8 : IA → 10 idées
+  4: "videos",      // Niveau 4 : 1ère vidéo faceless
+  5: "videos",      // Niveau 5 : Montage mobile
+  7: "publish",     // Niveau 7 : SEO / Publication
+  9: "analytics",   // Niveau 9 : Analytics
+  10: "winners",    // Niveau 10 : Expériences (test 1 produit × 3 hooks)
+  11: "winners",    // Niveau 11 : Identifier un winner
+  14: "winners",    // Niveau 14 : Dashboard final
+};
+
 const STORE_KEY="tsa_progress_v1";
 let state={};
 try{const raw=localStorage.getItem(STORE_KEY);if(raw)state=JSON.parse(raw)||{};}catch(e){state={};}
 function save(){try{localStorage.setItem(STORE_KEY,JSON.stringify(state));}catch(e){}}
+
+// Sync lesson → dashboard
+function syncLessonToDash(lessonNum, checked){
+  const dashId = LESSON_TO_DASH[lessonNum];
+  if(!dashId) return;
+  dashState.steps[dashId] = dashState.steps[dashId] || {};
+  dashState.steps[dashId].done = checked;
+  dashSave();
+  renderDashboard();
+  renderFlowchart();
+}
+
+// Sync dashboard → lessons
+function syncDashToLessons(dashId, checked){
+  // Trouve tous les niveaux qui mappent vers cet id dashboard
+  const lessonNums = Object.entries(LESSON_TO_DASH).filter(([,v])=>v===dashId).map(([k])=>+k);
+  lessonNums.forEach(n=>{
+    const id = "lv"+n;
+    state[id] = checked;
+    const el = document.querySelector(`.lesson input[data-goal="${id}"]`);
+    if(el){
+      el.checked = checked;
+      el.closest(".lesson").classList.toggle("done", checked);
+      const body = el.closest(".lesson").querySelector(".lesson-body");
+      if(el.closest(".lesson").classList.contains("open")) body.style.maxHeight = body.scrollHeight+"px";
+    }
+  });
+  save();
+  updateProgress(false);
+}
 
 // Build lessons
 const lc=document.getElementById("lessons");
@@ -775,6 +821,8 @@ LESSONS.forEach(L=>{
     el.classList.toggle("done",cb.checked);
     if(el.classList.contains("open"))body.style.maxHeight=body.scrollHeight+"px";
     updateProgress(cb.checked);
+    // Sync vers dashboard
+    syncLessonToDash(L.n, cb.checked);
   });
   el.querySelector(".check-goal").addEventListener("click",e=>e.stopPropagation());
 });
@@ -1084,6 +1132,8 @@ function renderDashboard(){
       dashSave();
       renderDashboard();
       renderFlowchart();
+      // Sync vers leçons
+      syncDashToLessons(id, cb.checked);
     });
   });
 
@@ -1145,6 +1195,14 @@ function renderDashboard(){
 // Initial render
 renderFlowchart();
 renderDashboard();
+
+// Sync initial : leçons → dashboard (au chargement)
+LESSONS.forEach(L=>{
+  const id="lv"+L.n;
+  if(state[id]){
+    syncLessonToDash(L.n, true);
+  }
+});
 
 // Dashboard accordion
 document.getElementById("dashHead").addEventListener("click",()=>{
