@@ -573,6 +573,226 @@
     <div class="principle" style="font-size:13px;margin-top:6px"><span class="r">Automate → Spam → Hope</span></div>
   </div>
 
+<!-- ============================================================= -->
+<!--  MODULE "TON PREMIER PROJET" — tracker quantifié + sync       -->
+<!--  Autonome : styles + markup + script inclus. Ne touche à rien  -->
+<!--  d'autre. Se relie à tsa_progress_v1 (niveaux) et              -->
+<!--  tsa_dashboard_v1 (dashboard) s'ils existent, sinon isolé.     -->
+<!-- ============================================================= -->
+
+<style>
+  /* --- Tracker premier projet (préfixe fp- pour éviter tout conflit) --- */
+  .fp-wrap{
+    background:var(--card,#fff);border:2px solid var(--ink,#141018);border-radius:22px;
+    padding:22px 20px;margin:26px 0;box-shadow:6px 6px 0 var(--pink,#ff2d78);
+  }
+  .fp-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+  .fp-head h3{font-family:var(--font-display,"Arial Black",sans-serif);text-transform:uppercase;font-size:20px;letter-spacing:-.01em}
+  .fp-head .fp-pct{font-family:var(--font-display,sans-serif);font-size:26px;color:var(--pink,#ff2d78)}
+  .fp-sub{color:var(--muted,#8a8194);font-weight:600;font-size:13px;margin-bottom:14px}
+  .fp-bar{height:12px;background:#efe6da;border-radius:100px;overflow:hidden;margin-bottom:18px}
+  .fp-bar>i{display:block;height:100%;width:0;border-radius:100px;
+    background:linear-gradient(90deg,var(--lime,#c8f45a),var(--cyan,#00c2c7),var(--pink,#ff2d78));
+    transition:width .5s cubic-bezier(.2,.8,.2,1)}
+  .fp-steps{display:grid;gap:10px}
+  .fp-step{
+    display:flex;align-items:center;gap:12px;
+    border:2px solid var(--ink,#141018);border-radius:14px;padding:12px 14px;background:#fff;
+    transition:box-shadow .18s ease, transform .18s ease;
+  }
+  .fp-step.fp-done{box-shadow:4px 4px 0 var(--lime,#c8f45a);background:#f9fff0}
+  .fp-ic{flex:none;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font-size:20px;
+    background:var(--violet-soft,#ede4ff)}
+  .fp-step.fp-done .fp-ic{background:var(--lime,#c8f45a)}
+  .fp-meta{flex:1;min-width:0}
+  .fp-meta .fp-label{font-family:var(--font-display,sans-serif);font-size:15px;line-height:1.1}
+  .fp-meta .fp-hint{color:var(--muted,#8a8194);font-weight:600;font-size:11.5px;margin-top:2px}
+  .fp-count{flex:none;display:flex;align-items:center;gap:8px}
+  .fp-count button{
+    width:32px;height:32px;border-radius:9px;border:2px solid var(--ink,#141018);
+    background:#fff;font-weight:900;font-size:16px;cursor:pointer;line-height:1;
+    display:grid;place-items:center;transition:transform .1s ease}
+  .fp-count button:active{transform:scale(.9)}
+  .fp-count button:disabled{opacity:.3;cursor:not-allowed}
+  .fp-count .fp-val{font-family:var(--font-display,sans-serif);font-size:15px;min-width:52px;text-align:center}
+  .fp-count .fp-val b{color:var(--pink,#ff2d78)}
+  .fp-check{flex:none;width:28px;height:28px}
+  .fp-check .fp-tick{width:28px;height:28px;border-radius:8px;border:2.5px solid var(--ink,#141018);
+    display:grid;place-items:center;font-weight:900;color:transparent;font-size:16px}
+  .fp-step.fp-done .fp-tick{background:var(--lime,#c8f45a);color:var(--ink,#141018)}
+  .fp-toggle{cursor:pointer}
+  .fp-foot{display:flex;gap:10px;flex-wrap:wrap;justify-content:space-between;align-items:center;margin-top:16px}
+  .fp-sync-note{color:var(--muted,#8a8194);font-weight:600;font-size:11.5px;flex:1;min-width:180px}
+  .fp-reset{background:transparent;border:1.5px solid #d8cfc2;color:var(--muted,#8a8194);
+    border-radius:100px;padding:6px 14px;font-weight:700;font-size:12px;cursor:pointer}
+  .fp-reset:hover{border-color:var(--ink,#141018);color:var(--ink,#141018)}
+  .fp-win{background:linear-gradient(120deg,var(--pink,#ff2d78),var(--violet,#7c3aed));color:#fff;
+    border-radius:14px;padding:14px 16px;margin-top:14px;text-align:center;font-weight:800;display:none}
+  .fp-win.fp-show{display:block}
+  @media(max-width:480px){
+    .fp-meta .fp-hint{display:none}
+    .fp-ic{width:34px;height:34px;font-size:17px}
+    .fp-count button{width:30px;height:30px}
+  }
+  @media print{.fp-count button,.fp-reset{display:none}}
+</style>
+
+<section class="fp-wrap" id="fpWrap" aria-labelledby="fpTitle">
+  <div class="fp-head">
+    <h3 id="fpTitle">🚀 Suivi de ton premier projet</h3>
+    <span class="fp-pct" id="fpPct">0%</span>
+  </div>
+  <p class="fp-sub">Coche et compte au fur et à mesure. Chaque cible atteinte valide l'étape — et coche automatiquement le niveau et le dashboard liés.</p>
+  <div class="fp-bar"><i id="fpBar"></i></div>
+  <div class="fp-steps" id="fpSteps"></div>
+  <div class="fp-win" id="fpWin">🏆 Projet complet ! Tu as bouclé un cycle niche → winners. Tu as compris comment fonctionne un système de contenu.</div>
+  <div class="fp-foot">
+    <span class="fp-sync-note" id="fpSyncNote">🔄 Relié à ton parcours et à ton dashboard.</span>
+    <button class="fp-reset" id="fpReset">↺ Réinitialiser ce projet</button>
+  </div>
+</section>
+
+<script>
+(function(){
+  "use strict";
+  // --- Clés existantes de ton site (lecture/écriture douce) ---
+  const K_FP    = "tsa_firstproject_v1";  // état propre à ce module
+  const K_LESS  = "tsa_progress_v1";       // niveaux du parcours
+  const K_DASH  = "tsa_dashboard_v1";      // dashboard système de contenu
+
+  // --- Définition du pipeline : 8 étapes quantifiées ---
+  // lesson  = numéro de niveau lié (clé "lv<n>" dans tsa_progress_v1)
+  // dash    = clé d'étape du dashboard (aligné sur ton LESSON_TO_DASH)
+  const STEPS = [
+    {id:"niche",    icon:"🎯", label:"1 niche",         target:1,  hint:"Choisis ta niche gagnante",              lesson:2,  dash:"niche"},
+    {id:"products", icon:"🛍️", label:"10 produits",     target:10, hint:"Notés /25 sur les 5 critères",           lesson:3,  dash:"products"},
+    {id:"ideas",    icon:"💡", label:"20 idées",         target:20, hint:"Hooks, angles, formats",                 lesson:6,  dash:"ideas"},
+    {id:"scripts",  icon:"✍️", label:"10 scripts",       target:10, hint:"Hook · problème · démo · CTA",            lesson:8,  dash:"ideas"},
+    {id:"videos",   icon:"🎬", label:"10 vidéos",        target:10, hint:"Montées et prêtes à publier",            lesson:5,  dash:"videos"},
+    {id:"publish",  icon:"📤", label:"Publication",      target:10, hint:"Publier pour apprendre",                 lesson:7,  dash:"publish"},
+    {id:"analytics",icon:"📊", label:"Analytics",        target:10, hint:"Une fiche par vidéo",                    lesson:9,  dash:"analytics"},
+    {id:"winners",  icon:"🏆", label:"3 meilleurs",      target:3,  hint:"Tes signaux les plus forts",             lesson:10, dash:"winners"}
+  ];
+
+  // --- Helpers localStorage sûrs ---
+  function read(key){ try{const r=localStorage.getItem(key);return r?(JSON.parse(r)||{}):{};}catch(e){return {};} }
+  function write(key,obj){ try{localStorage.setItem(key,JSON.stringify(obj));}catch(e){} }
+
+  // état = { niche:1, products:7, ... } (compteurs)
+  let fp = read(K_FP);
+  STEPS.forEach(s=>{ if(typeof fp[s.id]!=="number") fp[s.id]=0; });
+
+  // --- Sync ENTRANTE : si un niveau lié est déjà validé, cible atteinte ---
+  function pullFromSystems(){
+    const less = read(K_LESS);
+    STEPS.forEach(s=>{
+      if(less["lv"+s.lesson] && fp[s.id] < s.target){ fp[s.id] = s.target; }
+    });
+  }
+
+  // --- Sync SORTANTE : cible atteinte → coche niveau + dashboard ---
+  function pushToSystems(){
+    const less = read(K_LESS);
+    const dash = read(K_DASH);
+    let lessChanged=false, dashChanged=false;
+    STEPS.forEach(s=>{
+      const done = fp[s.id] >= s.target;
+      if(done){
+        if(!less["lv"+s.lesson]){ less["lv"+s.lesson]=true; lessChanged=true; }
+        // le dashboard peut stocker soit un bool, soit {done:true} — on gère les deux
+        if(s.dash){
+          const cur = dash[s.dash];
+          const curDone = cur===true || (cur && cur.done===true);
+          if(!curDone){
+            dash[s.dash] = (cur && typeof cur==="object") ? Object.assign({},cur,{done:true}) : true;
+            dashChanged=true;
+          }
+        }
+      }
+    });
+    if(lessChanged) write(K_LESS, less);
+    if(dashChanged) write(K_DASH, dash);
+  }
+
+  // --- Rendu ---
+  const stepsEl = document.getElementById("fpSteps");
+  function render(){
+    stepsEl.innerHTML = STEPS.map(s=>{
+      const v = Math.min(fp[s.id], s.target);
+      const done = v >= s.target;
+      const showCounter = s.target > 1;
+      const counter = showCounter
+        ? `<div class="fp-count">
+             <button type="button" data-dec="${s.id}" aria-label="Retirer un ${s.label}">−</button>
+             <span class="fp-val"><b>${v}</b>/${s.target}</span>
+             <button type="button" data-inc="${s.id}" aria-label="Ajouter un ${s.label}">+</button>
+           </div>`
+        : `<div class="fp-check fp-toggle" data-toggle="${s.id}" role="checkbox" aria-checked="${done}" tabindex="0" aria-label="${s.label}">
+             <span class="fp-tick">✓</span>
+           </div>`;
+      return `<div class="fp-step ${done?'fp-done':''}" data-step="${s.id}">
+        <span class="fp-ic" aria-hidden="true">${s.icon}</span>
+        <span class="fp-meta"><span class="fp-label">${s.label}</span><span class="fp-hint">${s.hint}</span></span>
+        ${counter}
+      </div>`;
+    }).join("");
+  }
+
+  function progress(){
+    const totalUnits = STEPS.reduce((a,s)=>a+s.target,0);
+    const doneUnits  = STEPS.reduce((a,s)=>a+Math.min(fp[s.id],s.target),0);
+    const pct = Math.round(doneUnits/totalUnits*100);
+    document.getElementById("fpPct").textContent = pct+"%";
+    document.getElementById("fpBar").style.width = pct+"%";
+    const allDone = STEPS.every(s=>fp[s.id]>=s.target);
+    document.getElementById("fpWin").classList.toggle("fp-show", allDone);
+  }
+
+  function setVal(id, val){
+    const s = STEPS.find(x=>x.id===id);
+    fp[id] = Math.max(0, Math.min(val, s.target));
+    write(K_FP, fp);
+    pushToSystems();
+    render(); progress();
+  }
+
+  // --- Interactions (délégation d'événements) ---
+  stepsEl.addEventListener("click", e=>{
+    const inc = e.target.getAttribute("data-inc");
+    const dec = e.target.getAttribute("data-dec");
+    const tog = e.target.closest("[data-toggle]");
+    if(inc){ setVal(inc, fp[inc]+1); }
+    else if(dec){ setVal(dec, fp[dec]-1); }
+    else if(tog){ const id=tog.getAttribute("data-toggle"); const s=STEPS.find(x=>x.id===id); setVal(id, fp[id]>=s.target?0:s.target); }
+  });
+  stepsEl.addEventListener("keydown", e=>{
+    const tog = e.target.closest("[data-toggle]");
+    if(tog && (e.key===" "||e.key==="Enter")){ e.preventDefault();
+      const id=tog.getAttribute("data-toggle"); const s=STEPS.find(x=>x.id===id); setVal(id, fp[id]>=s.target?0:s.target);
+    }
+  });
+
+  document.getElementById("fpReset").addEventListener("click", ()=>{
+    if(confirm("Réinitialiser uniquement le suivi de ce projet ? (tes niveaux et ton dashboard ne sont pas touchés)")){
+      STEPS.forEach(s=>fp[s.id]=0); write(K_FP, fp); render(); progress();
+    }
+  });
+
+  // --- Sync entrante quand un autre onglet/section modifie le stockage ---
+  window.addEventListener("storage", e=>{
+    if(e.key===K_LESS || e.key===K_DASH){ pullFromSystems(); write(K_FP,fp); render(); progress(); }
+  });
+
+  // --- Init ---
+  pullFromSystems();
+  write(K_FP, fp);
+  pushToSystems();
+  render();
+  progress();
+})();
+</script>
+<!-- ===================== FIN DU MODULE ===================== -->
+
   <div class="save-card">
     <h4>📥 Emporte le cours partout</h4>
     <p>Télécharge le cours complet en un seul fichier. Il s'ouvre sur n'importe quel téléphone, <b>même sans connexion</b>.</p>
