@@ -1,0 +1,20 @@
+{
+  "name": "TikTok Shop Academy",
+  "short_name": "TikTok Academy",
+  "description": "Cours mobile pour apprendre à créer un business TikTok Shop faceless en 30 jours.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#fdf7ef",
+  "theme_color": "#141018",
+  "lang": "fr",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

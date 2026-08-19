@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="Cours mobile pour apprendre à créer un business TikTok Shop faceless en 30 jours : niches, produits, hooks, montage, SEO, analytics.">
+<meta name="theme-color" content="#141018">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon.svg">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="TikTok Academy">
+<meta name="mobile-web-app-capable" content="yes">
+<title>TikTok Shop Academy</title>
+<style>
+  :root{
+    --ink:#141018;
+    --paper:#fdf7ef;
+    --card:#ffffff;
+    --pink:#ff2d78;
+    --pink-soft:#ffe1ec;
+    --violet:#7c3aed;
+    --violet-soft:#ede4ff;
+    --cyan:#00c2c7;
+    --cyan-soft:#d5f7f6;
+    --lime:#c8f45a;
+    --amber:#ffb800;
+    --line:#efe6da;
+    --muted:#8a8194;
+    --shadow:0 10px 30px rgba(30,10,40,.08);
+    --shadow-lg:0 22px 50px rgba(30,10,40,.16);
+    --font-display:"Arial Black","Helvetica Neue",Impact,sans-serif;
+    --font-body:"Avenir Next","Segoe UI",-apple-system,BlinkMacSystemFont,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  html{scroll-behavior:smooth}
+  :focus-visible{outline:3px solid var(--violet);outline-offset:3px;border-radius:6px}
+  @media (prefers-reduced-motion:reduce){
+    *{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
+  }
+  body{
+    font-family:var(--font-body);
+    background:
+      radial-gradient(circle at 12% 8%, rgba(255,45,120,.10), transparent 40%),
+      radial-gradient(circle at 88% 4%, rgba(124,58,237,.10), transparent 38%),
+      var(--paper);
+    color:var(--ink);
+    line-height:1.55;
+    padding-bottom:72px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:720px;margin:0 auto;padding:0 18px}
+
+  /* ===== HEADER ===== */
+  header.hero{
+    position:relative;
+    padding:34px 0 26px;
+    text-align:center;
+  }
+  .kicker{
+    display:inline-flex;align-items:center;gap:7px;
+    background:var(--ink);color:#fff;
+    font-weight:800;font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+    padding:7px 14px;border-radius:100px;margin-bottom:18px;
+  }
+  .kicker .dot{width:8px;height:8px;border-radius:50%;background:var(--lime);animation:blink 1.6s infinite}
+  @keyframes blink{50%{opacity:.3}}
+  h1.title{
+    font-family:var(--font-display);
+    font-size:clamp(38px,10vw,68px);
+    line-height:.94;letter-spacing:-.02em;
+    text-transform:uppercase;
+    background:linear-gradient(120deg,var(--pink),var(--violet) 60%,var(--cyan));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .sub{color:var(--muted);font-weight:600;margin-top:14px;font-size:15px}
+  .meta-row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:20px}
+  .chip{
+    background:var(--card);border:2px solid var(--ink);border-radius:100px;
+    padding:7px 14px;font-weight:800;font-size:12.5px;
+    box-shadow:3px 3px 0 var(--ink);
+  }
+
+  /* ===== PROGRESS ===== */
+  .progress-card{
+    background:var(--ink);color:#fff;border-radius:22px;
+    padding:22px;margin:24px 0;box-shadow:var(--shadow-lg);
+  }
+  .progress-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px}
+  .progress-top b{font-family:var(--font-display);font-size:30px;letter-spacing:-.01em}
+  .progress-top span{color:#c9bfd6;font-weight:700;font-size:13px}
+  .bar{height:14px;background:rgba(255,255,255,.14);border-radius:100px;overflow:hidden}
+  .bar > i{
+    display:block;height:100%;width:0%;border-radius:100px;
+    background:linear-gradient(90deg,var(--lime),var(--cyan),var(--pink));
+    transition:width .5s cubic-bezier(.2,.8,.2,1);
+  }
+  .rank-line{margin-top:14px;display:flex;align-items:center;gap:10px;font-weight:700;font-size:13.5px}
+  .rank-badge{font-size:22px}
+  .reset{
+    margin-top:14px;background:transparent;border:1.5px solid rgba(255,255,255,.25);
+    color:#c9bfd6;border-radius:100px;padding:6px 14px;font-weight:700;font-size:12px;cursor:pointer;
+  }
+  .reset:hover{border-color:#fff;color:#fff}
+
+  /* ===== INTRO NOTES ===== */
+  .callout{
+    border-radius:18px;padding:18px 20px;margin:18px 0;font-weight:600;
+    border:2px solid var(--ink);box-shadow:4px 4px 0 var(--ink);
+  }
+  .callout.good{background:var(--cyan-soft)}
+  .callout.warn{background:#fff2cc}
+  .callout h4{font-family:var(--font-display);font-size:16px;text-transform:uppercase;letter-spacing:.02em;margin-bottom:8px}
+  .callout ul{list-style:none;display:grid;gap:6px}
+  .callout li{padding-left:26px;position:relative;font-size:14.5px}
+  .callout.good li::before{content:"❌";position:absolute;left:0}
+  .callout.warn li::before{content:"⚠️";position:absolute;left:0}
+
+  /* ===== SECTION LABEL ===== */
+  .section-label{
+    font-family:var(--font-display);text-transform:uppercase;
+    font-size:13px;letter-spacing:.16em;color:var(--muted);
+    margin:34px 0 6px;display:flex;align-items:center;gap:10px;
+  }
+  .section-label::after{content:"";flex:1;height:2px;background:var(--line)}
+
+  /* ===== LESSON CARDS ===== */
+  .lesson{
+    background:var(--card);border:2px solid var(--ink);border-radius:20px;
+    margin:16px 0;overflow:hidden;box-shadow:var(--shadow);
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .lesson.done{box-shadow:6px 6px 0 var(--lime)}
+  .lesson-head{
+    display:flex;align-items:center;gap:14px;padding:16px 18px;cursor:pointer;
+    user-select:none;
+    width:100%;text-align:left;background:none;border:none;font:inherit;color:inherit;
+  }
+  .lvl-num{
+    flex:none;width:46px;height:46px;border-radius:14px;
+    display:grid;place-items:center;font-family:var(--font-display);font-size:20px;color:#fff;
+    background:var(--violet);box-shadow:3px 3px 0 var(--ink);
+  }
+  .lesson:nth-child(4n) .lvl-num{background:var(--pink)}
+  .lesson:nth-child(4n+1) .lvl-num{background:var(--cyan)}
+  .lesson:nth-child(4n+2) .lvl-num{background:var(--amber)}
+  .lesson-titles{flex:1;min-width:0}
+  .lesson-titles .lv{display:block;font-weight:800;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+  .lesson-titles .lt{display:block;font-family:var(--font-display);font-size:19px;line-height:1.1;letter-spacing:-.01em;margin-top:2px}
+  .chev{flex:none;font-size:14px;color:var(--muted);transition:transform .25s ease}
+  .lesson.open .chev{transform:rotate(180deg)}
+  .lesson-body{
+    max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.2,.8,.2,1);
+  }
+  .lesson-body-inner{padding:2px 18px 20px}
+  .lesson-body p{margin:10px 0;font-size:15px}
+  .lesson-body h5{
+    font-family:var(--font-display);text-transform:uppercase;font-size:13px;letter-spacing:.06em;
+    margin:18px 0 6px;display:flex;align-items:center;gap:8px;
+  }
+  .lesson-body ul{margin:8px 0 8px 4px;list-style:none;display:grid;gap:5px}
+  .lesson-body ul li{padding-left:22px;position:relative;font-size:14.5px}
+  .lesson-body ul li::before{content:"▸";position:absolute;left:2px;color:var(--pink);font-weight:900}
+
+  .flow{
+    background:var(--violet-soft);border-radius:14px;padding:14px 16px;margin:12px 0;
+    font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:13.5px;font-weight:600;
+    text-align:center;line-height:2;
+  }
+  .flow b{color:var(--violet)}
+
+  .example-box{
+    border-left:4px solid var(--cyan);background:var(--cyan-soft);
+    border-radius:0 12px 12px 0;padding:12px 14px;margin:12px 0;font-size:14px;
+  }
+  .example-box .x{color:#c0392b;font-weight:700}
+  .example-box .v{color:#0a8f7a;font-weight:700}
+
+  .mission{
+    background:var(--pink-soft);border:2px dashed var(--pink);border-radius:14px;
+    padding:14px 16px;margin:14px 0;
+  }
+  .mission .mtag{font-family:var(--font-display);color:var(--pink);text-transform:uppercase;font-size:12px;letter-spacing:.08em}
+  .mission p{margin:6px 0 0;font-size:14.5px;font-weight:600}
+
+  .check-goal{
+    display:flex;align-items:flex-start;gap:12px;margin-top:14px;
+    background:#f6fff0;border:2px solid var(--ink);border-radius:14px;padding:14px;
+    cursor:pointer;
+  }
+  .check-goal input{display:none}
+  .box{
+    flex:none;width:26px;height:26px;border-radius:8px;border:2.5px solid var(--ink);
+    display:grid;place-items:center;font-weight:900;color:transparent;transition:all .15s ease;
+  }
+  .check-goal input:checked + .box{background:var(--lime);color:var(--ink)}
+  .check-goal .goal-txt{font-weight:700;font-size:14px}
+  .check-goal .goal-txt small{display:block;font-weight:600;color:var(--muted);font-size:12px;margin-top:2px}
+
+  table.mini{width:100%;border-collapse:collapse;margin:10px 0;font-size:13.5px}
+  table.mini td{border:1.5px solid var(--line);padding:8px 10px}
+  table.mini td:last-child{text-align:right;white-space:nowrap}
+
+  /* ===== 30 DAY CHALLENGE ===== */
+  .weeks{display:grid;gap:12px;margin:14px 0}
+  .week{background:var(--card);border:2px solid var(--ink);border-radius:16px;padding:16px 18px;box-shadow:var(--shadow)}
+  .week h4{font-family:var(--font-display);text-transform:uppercase;font-size:16px;margin-bottom:10px}
+  .week .tasks{display:grid;gap:8px}
+  .task{display:flex;align-items:center;gap:10px;cursor:pointer}
+  .task input{display:none}
+  .task .tbox{flex:none;width:22px;height:22px;border-radius:6px;border:2px solid var(--ink);display:grid;place-items:center;color:transparent;font-weight:900;font-size:13px}
+  .task input:checked + .tbox{background:var(--cyan);color:#fff}
+  .task span.tx{font-size:14px;font-weight:600}
+  .task input:checked ~ span.tx{text-decoration:line-through;color:var(--muted)}
+
+  /* ===== RANKS ===== */
+  .ranks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:14px 0}
+  .rank{border:2px solid var(--ink);border-radius:16px;padding:16px;box-shadow:4px 4px 0 var(--ink);background:var(--card)}
+  .rank .rk{font-family:var(--font-display);font-size:20px;display:flex;align-items:center;gap:8px}
+  .rank ul{list-style:none;margin-top:8px;display:grid;gap:4px}
+  .rank ul li{font-size:13px;font-weight:600;padding-left:16px;position:relative}
+  .rank ul li::before{content:"✓";position:absolute;left:0;color:var(--cyan);font-weight:900}
+
+  /* ===== RULES ===== */
+  .rules{counter-reset:r;display:grid;gap:8px;margin:14px 0}
+  .rule{
+    display:flex;align-items:center;gap:14px;background:var(--card);
+    border:2px solid var(--ink);border-radius:100px;padding:10px 18px;font-weight:800;font-size:14.5px;
+  }
+  .rule::before{
+    counter-increment:r;content:counter(r);
+    font-family:var(--font-display);color:#fff;background:var(--ink);
+    width:30px;height:30px;border-radius:50%;display:grid;place-items:center;flex:none;font-size:15px;
+  }
+
+  /* ===== FINAL PROJECT ===== */
+  .final{
+    background:linear-gradient(135deg,var(--ink),#2a1840);color:#fff;
+    border-radius:24px;padding:26px 22px;margin:26px 0;box-shadow:var(--shadow-lg);text-align:center;
+  }
+  .final h3{font-family:var(--font-display);font-size:26px;text-transform:uppercase;letter-spacing:-.01em}
+  .final .fflow{
+    background:rgba(255,255,255,.08);border-radius:16px;padding:18px;margin:16px 0;
+    font-family:"SF Mono",ui-monospace,monospace;font-size:14px;font-weight:600;line-height:2.1;
+  }
+  .final .fflow b{color:var(--lime)}
+  .final .principle{font-weight:800;font-size:16px;margin-top:12px}
+  .final .principle .g{color:var(--lime)}
+  .final .principle .r{color:var(--pink);text-decoration:line-through;opacity:.7}
+
+  footer{text-align:center;color:var(--muted);font-size:12.5px;font-weight:600;padding:30px 0 40px}
+
+  /* ===== SAVE / OFFLINE ===== */
+  .save-card{
+    background:var(--card);border:2px solid var(--ink);border-radius:20px;
+    padding:20px;margin:24px 0;box-shadow:6px 6px 0 var(--violet);text-align:center;
+  }
+  .save-card h4{font-family:var(--font-display);text-transform:uppercase;font-size:16px;letter-spacing:.02em;margin-bottom:6px}
+  .save-card p{color:var(--muted);font-weight:600;font-size:13.5px;margin-bottom:14px}
+  .save-btn{
+    display:inline-flex;align-items:center;gap:9px;cursor:pointer;
+    font-family:var(--font-display);text-transform:uppercase;font-size:16px;letter-spacing:.02em;
+    color:#fff;background:linear-gradient(120deg,var(--pink),var(--violet));
+    border:2px solid var(--ink);border-radius:100px;padding:13px 26px;
+    box-shadow:4px 4px 0 var(--ink);transition:transform .12s ease, box-shadow .12s ease;
+  }
+  .save-btn:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink)}
+  .save-btn .ic{font-size:20px}
+  .save-hint{margin-top:12px;font-size:12px;color:var(--muted);font-weight:600;line-height:1.5}
+
+  .fab{
+    position:fixed;right:16px;bottom:70px;z-index:900;
+    width:56px;height:56px;border-radius:18px;cursor:pointer;
+    display:grid;place-items:center;font-size:24px;
+    color:#fff;background:linear-gradient(120deg,var(--pink),var(--violet));
+    border:2.5px solid var(--ink);box-shadow:4px 4px 0 var(--ink);
+    transition:transform .12s ease, box-shadow .12s ease;
+  }
+  .fab:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink)}
+
+  .toast{
+    position:fixed;left:50%;bottom:100px;transform:translateX(-50%) translateY(20px);
+    background:var(--ink);color:#fff;font-weight:700;font-size:13.5px;
+    padding:12px 20px;border-radius:100px;z-index:1000;box-shadow:var(--shadow-lg);
+    opacity:0;pointer-events:none;transition:opacity .25s ease, transform .25s ease;max-width:88vw;text-align:center;
+  }
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  @media print{.fab,.save-card{display:none}}
+
+  /* ===== SYNC EXPORT / IMPORT ===== */
+  .sync{margin-top:18px;padding-top:16px;border-top:2px dashed var(--line)}
+  .sync h5{font-family:var(--font-display);text-transform:uppercase;font-size:13px;letter-spacing:.04em;margin-bottom:4px}
+  .sync p.hint{color:var(--muted);font-weight:600;font-size:12.5px;margin-bottom:12px}
+  .sync-tabs{display:flex;gap:8px;justify-content:center;margin-bottom:12px}
+  .sync-tab{
+    font-family:var(--font-display);text-transform:uppercase;font-size:12px;letter-spacing:.04em;cursor:pointer;
+    background:var(--card);border:2px solid var(--ink);border-radius:100px;padding:8px 16px;
+  }
+  .sync-tab.active{background:var(--ink);color:#fff}
+  .sync-pane{display:none}
+  .sync-pane.active{display:block}
+  .sync textarea{
+    width:100%;min-height:78px;resize:vertical;
+    border:2px solid var(--ink);border-radius:12px;padding:10px 12px;
+    font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:12px;background:#faf6f0;color:var(--ink);
+  }
+  .sync-actions{display:flex;gap:8px;justify-content:center;margin-top:10px;flex-wrap:wrap}
+  .sync-btn{
+    cursor:pointer;font-weight:800;font-size:13px;
+    border:2px solid var(--ink);border-radius:100px;padding:9px 18px;background:var(--card);
+    box-shadow:3px 3px 0 var(--ink);transition:transform .1s ease, box-shadow .1s ease;
+  }
+  .sync-btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+  .sync-btn.primary{background:var(--lime)}
+
+  @media(max-width:520px){
+    .ranks{grid-template-columns:1fr}
+  }
+  @media print{
+    body{background:#fff;padding:0}
+    .lesson-body{max-height:none!important}
+    .chev,.reset,.progress-card .bar{display:none}
+    .lesson{break-inside:avoid;box-shadow:none;border-color:#ccc}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker"><span class="dot"></span>Niveau débutant · 100% mobile</div>
+    <h1 class="title">TikTok Shop Academy</h1>
+    <p class="sub">Apprends à construire un business TikTok <b>faceless</b> avec ton téléphone. Teste → observe → apprends → recommence.</p>
+    <div class="meta-row">
+      <div class="chip">📱 Mobile-first</div>
+      <div class="chip">⏱️ 30 jours</div>
+      <div class="chip">🎬 14 niveaux</div>
+      <div class="chip">🕵️ Faceless</div>
+    </div>
+  </header>
+
+  <div class="progress-card">
+    <div class="progress-top">
+      <b id="pct">0%</b>
+      <span id="count">0 / 14 niveaux validés</span>
+    </div>
+    <div class="bar"><i id="barfill"></i></div>
+    <div class="rank-line">
+      <span class="rank-badge" id="rankBadge">🌱</span>
+      <span id="rankText">Rang actuel : Débutant — valide ta 1ère leçon pour démarrer</span>
+    </div>
+    <button class="reset" id="resetBtn">↺ Réinitialiser ma progression</button>
+  </div>
+
+  <div class="callout good">
+    <h4>🎯 Tu n'as PAS besoin de</h4>
+    <ul>
+      <li>un ordinateur puissant</li>
+      <li>une caméra professionnelle</li>
+      <li>montrer ton visage</li>
+      <li>savoir coder</li>
+      <li>créer ton propre produit</li>
+    </ul>
+  </div>
+
+  <div class="callout warn">
+    <h4>🔞 Important — l'âge</h4>
+    <p style="font-weight:600;font-size:14px;margin:0 0 8px">TikTok Shop Creator demande <b>18 ans ou plus</b> pour le programme d'affiliation. Si tu as moins de 18 ans, tu peux apprendre tout le reste (création vidéo, montage, SEO, recherche produit, IA, analytics)…</p>
+    <ul>
+      <li>Le compte Affiliate et les opérations doivent être faits par un adulte éligible.</li>
+      <li>Ne jamais mentir sur son âge ni contourner une vérification.</li>
+    </ul>
+  </div>
+
+  <div class="section-label">Parcours · 14 niveaux</div>
+  <div id="lessons"></div>
+
+  <div class="section-label">Challenge · 30 jours</div>
+  <div class="weeks" id="weeks"></div>
+
+  <div class="section-label">Tes rangs à débloquer</div>
+  <div class="ranks">
+    <div class="rank"><div class="rk">🥉 Bronze</div><ul><li>Trouver un produit</li><li>Créer une vidéo</li><li>Publier</li><li>Lire les analytics</li></ul></div>
+    <div class="rank"><div class="rk">🥈 Silver</div><ul><li>Trouver une niche</li><li>Faire du SEO TikTok</li><li>Tester des hooks</li><li>Comparer les résultats</li></ul></div>
+    <div class="rank"><div class="rk">🥇 Gold</div><ul><li>Système de contenu</li><li>Analyser les produits</li><li>Créer des expériences</li><li>Identifier les winners</li></ul></div>
+    <div class="rank"><div class="rk">💎 Creator</div><ul><li>Construire un workflow</li><li>Utiliser l'IA</li><li>Automatiser des tâches</li><li>Décider avec les données</li></ul></div>
+  </div>
+
+  <div class="section-label">Les 10 règles du Creator</div>
+  <div class="rules">
+    <div class="rule">Ne mens jamais.</div>
+    <div class="rule">Ne fake jamais une expérience.</div>
+    <div class="rule">Ne copie pas simplement les autres créateurs.</div>
+    <div class="rule">Ne spamme pas.</div>
+    <div class="rule">Ne cherche pas uniquement les vues.</div>
+    <div class="rule">Teste une variable à la fois.</div>
+    <div class="rule">Apprends des données.</div>
+    <div class="rule">Utilise l'IA comme assistant.</div>
+    <div class="rule">Protège tes informations personnelles.</div>
+    <div class="rule">Amuse-toi à construire. 🚀</div>
+  </div>
+
+  <div class="final">
+    <h3>🎯 Ton premier projet</h3>
+    <div class="fflow">
+      🎯 <b>1 niche</b><br>↓<br>🛍️ <b>10 produits</b><br>↓<br>💡 <b>20 idées</b><br>↓<br>✍️ <b>10 scripts</b><br>↓<br>🎬 <b>10 vidéos</b><br>↓<br>📤 Publication<br>↓<br>📊 Analytics<br>↓<br>🏆 <b>3 meilleurs contenus</b>
+    </div>
+    <p style="color:#c9bfd6;font-weight:600;font-size:14px">À la fin, tu ne dois pas seulement avoir publié des vidéos. Tu dois avoir compris <b style="color:#fff">comment fonctionne un système de contenu.</b></p>
+    <div class="principle"><span class="g">Learn → Build → Test → Measure → Automate</span></div>
+    <div class="principle" style="font-size:13px;margin-top:6px"><span class="r">Automate → Spam → Hope</span></div>
+  </div>
+
+  <div class="save-card">
+    <h4>📥 Emporte le cours partout</h4>
+    <p>Télécharge le cours complet en un seul fichier. Il s'ouvre sur n'importe quel téléphone, <b>même sans connexion</b>.</p>
+    <button class="save-btn" id="saveBtn"><span class="ic">⬇️</span> Sauvegarder en .html</button>
+    <div class="save-hint">Ta progression cochée est incluse dans le fichier téléchargé. Ouvre-le ensuite dans n'importe quel navigateur, hors ligne.</div>
+
+    <div id="manualSave" style="display:none;margin-top:14px;text-align:left">
+      <h5 style="font-family:var(--font-display);text-transform:uppercase;font-size:13px;margin-bottom:4px">📄 Sauvegarde manuelle</h5>
+      <p class="save-hint" style="margin:0 0 8px">Le téléchargement automatique est bloqué ici. Copie tout le texte ci-dessous, colle-le dans une note ou l'app « Fichiers », et enregistre-le sous <b>cours.html</b> (avec l'extension .html). Puis ouvre-le.</p>
+      <textarea id="manualCode" readonly style="width:100%;min-height:100px;resize:vertical;border:2px solid var(--ink);border-radius:12px;padding:10px 12px;font-family:'SF Mono',ui-monospace,Menlo,monospace;font-size:11px;background:#faf6f0;color:var(--ink)"></textarea>
+      <div style="text-align:center;margin-top:8px">
+        <button class="sync-btn primary" id="copyManual">📋 Copier tout le fichier</button>
+      </div>
+    </div>
+
+    <div class="sync">
+      <h5>🔄 Transférer ma progression</h5>
+      <p class="hint">Copie ton code sur un téléphone, colle-le sur l'autre. Rien ne passe par internet.</p>
+      <div class="sync-tabs" role="tablist" aria-label="Transférer la progression">
+        <button class="sync-tab active" data-pane="export" role="tab" id="tab-export" aria-selected="true" aria-controls="pane-export">📤 Exporter</button>
+        <button class="sync-tab" data-pane="import" role="tab" id="tab-import" aria-selected="false" aria-controls="pane-import">📥 Importer</button>
+      </div>
+      <div class="sync-pane active" id="pane-export" role="tabpanel" aria-labelledby="tab-export">
+        <textarea id="exportCode" readonly placeholder="Ton code apparaîtra ici…" aria-label="Code de progression à copier"></textarea>
+        <div class="sync-actions">
+          <button class="sync-btn primary" id="genCode">Générer mon code</button>
+          <button class="sync-btn" id="copyCode">📋 Copier</button>
+        </div>
+      </div>
+      <div class="sync-pane" id="pane-import" role="tabpanel" aria-labelledby="tab-import" hidden>
+        <textarea id="importCode" placeholder="Colle ici le code copié depuis ton autre téléphone…" aria-label="Coller le code de progression"></textarea>
+        <div class="sync-actions">
+          <button class="sync-btn primary" id="applyCode">Appliquer ce code</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>TikTok Shop Academy · Le principe : apprends d'abord, automatise en dernier.</footer>
+
+</div>
+
+<button class="fab" id="fabSave" title="Télécharger le cours (.html)" aria-label="Télécharger le cours">⬇️</button>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const LESSONS=[
+ {n:1,zone:"Comprendre TikTok Shop",title:"C'est quoi l'affiliation ?",body:`
+  <p>Une marque vend un produit. Toi, tu crées une vidéo. Quelqu'un achète → tu peux recevoir une commission.</p>
+  <div class="flow">Marque <b>↓</b> Produit <b>↓</b> Ta vidéo <b>↓</b> Un achat <b>↓</b> Commission</div>
+  <p>Tu n'es pas forcément le vendeur. <b>Tu es le créateur qui aide à découvrir le produit.</b></p>
+  <div class="mission"><span class="mtag">📱 Mission</span><p>Trouve 5 vidéos TikTok qui présentent un produit. Pour chacune, note : le produit, pourquoi la vidéo t'attire, quel problème le produit résout.</p></div>`,
+  goal:"J'ai trouvé et analysé 5 vidéos produit",gsub:"Validation du niveau 1"},
+
+ {n:2,zone:"Trouver ta niche",title:"Qu'est-ce qu'une niche ?",body:`
+  <p>Une niche = <b>un sujet précis pour une audience précise.</b></p>
+  <div class="example-box"><span class="x">❌ « Produits intéressants »</span> → <span class="v">✅ « Accessoires beauté abordables »</span><br><span class="x">❌ « Mode »</span> → <span class="v">✅ « Idées mode pour ados »</span></div>
+  <h5>🧠 Le test des 3 questions</h5>
+  <ul><li>Qu'est-ce qui m'intéresse ? (mode, beauté, sport, gaming, tech, déco…)</li><li>Qu'est-ce que je regarde naturellement dans mon feed ?</li><li>Quels produits sont faciles à montrer ? (plus c'est visuel, mieux c'est)</li></ul>
+  <div class="mission"><span class="mtag">📱 Mission</span><p>Choisis 3 niches, note chacune /5 sur : j'aime le sujet · je comprends l'audience · beaucoup de produits · beaucoup d'idées vidéo. Garde le meilleur score.</p></div>`,
+  goal:"J'ai choisi ma niche gagnante",gsub:"Validation du niveau 2"},
+
+ {n:3,zone:"Trouver un produit",title:"Le produit intéressant",body:`
+  <p>Ne cherche pas juste « produit viral ». Cherche : <b>facile à expliquer + facile à montrer + utile.</b></p>
+  <div class="flow">Problème <b>↓</b> Produit <b>↓</b> Démonstration <b>↓</b> Résultat</div>
+  <h5>🔎 La règle des 5 critères (note /5)</h5>
+  <ul><li>👀 Visuel — se voit bien en vidéo ?</li><li>💡 Utile — résout un problème ?</li><li>🎥 Démontrable — on peut montrer comment ça marche ?</li><li>💰 Prix — accessible à l'audience ?</li><li>🔁 Contenu — plusieurs vidéos possibles ?</li></ul>
+  <div class="mission"><span class="mtag">📱 Mission</span><p>Trouve 10 produits. Pour chacun : produit · prix · niche · pourquoi intéressant · idée vidéo · score /25.</p></div>`,
+  goal:"J'ai listé 10 produits notés /25",gsub:"Validation du niveau 3"},
+
+ {n:4,zone:"Créer une vidéo faceless",title:"Faceless",body:`
+  <p><b>Faceless = ton visage n'apparaît pas.</b> Tu peux utiliser : vidéo du produit, plans rapprochés, captures d'écran, texte, animation, voix-off, musique autorisée, démonstration des mains.</p>
+  <h5>🎥 La recette d'une vidéo</h5>
+  <ul><li><b>Hook</b> — les premières secondes. « Je viens de trouver ça et je comprends pourquoi les gens l'aiment. »</li><li><b>Problème</b> — montre le problème.</li><li><b>Produit</b> — montre la solution.</li><li><b>Démonstration</b> — montre comment ça marche.</li><li><b>CTA</b> — où retrouver le produit (quand la fonctionnalité est dispo).</li></ul>
+  <div class="mission"><span class="mtag">📱 Mission</span><p>Crée une vidéo de 15 à 30 s. Pas besoin qu'elle soit parfaite. Objectif : <b>publier pour apprendre.</b></p></div>`,
+  goal:"J'ai publié ma première vidéo",gsub:"Validation du niveau 4"},
+
+ {n:5,zone:"Montage sur téléphone",title:"Le workflow mobile",body:`
+  <p>Ton téléphone suffit pour commencer.</p>
+  <div class="flow">🎥 Clips <b>↓</b> ✂️ Montage <b>↓</b> 📝 Texte <b>↓</b> 🎙️ Voix <b>↓</b> 🎵 Audio <b>↓</b> 👀 Vérif <b>↓</b> 📤 Publication</div>
+  <h5>Une vidéo doit être</h5>
+  <ul><li>facile à comprendre</li><li>rapide</li><li>lisible</li><li>verticale</li><li>centrée sur une seule idée</li></ul>
+  <div class="mission"><span class="mtag">📱 Mission</span><p>Monte une vidéo complète de bout en bout sur ton téléphone en suivant le workflow ci-dessus.</p></div>`,
+  goal:"J'ai monté une vidéo entière sur mobile",gsub:"Validation du niveau 5"},
+
+ {n:6,zone:"Faire un bon Hook",title:"Le Hook",body:`
+  <p>Le hook donne une <b>raison de rester.</b></p>
+  <h5>Formats de hook</h5>
+  <ul><li><b>Curiosité</b> — « Je ne pensais pas que ça fonctionnerait comme ça. »</li><li><b>Problème</b> — « Si tu as ce problème, regarde ça. »</li><li><b>Découverte</b> — « Une petite trouvaille que je ne connaissais pas. »</li><li><b>Liste</b> — « 3 accessoires que je garderais. »</li><li><b>Test</b> — « J'ai testé ce produit pour voir si… »</li></ul>
+  <div class="mission"><span class="mtag">📱 Mission</span><p>Pour un seul produit : écris 5 hooks, 3 idées vidéo, 2 CTA. → 30 combinaisons possibles.</p></div>`,
+  goal:"J'ai écrit 5 hooks + 3 idées + 2 CTA",gsub:"Validation du niveau 6"},
+
+ {n:7,zone:"TikTok SEO",title:"Être trouvé dans la recherche",body:`
+  <p>TikTok ne sert pas qu'à faire défiler : les gens <b>recherchent</b> aussi des sujets.</p>
+  <div class="example-box"><span class="x">❌ « Regardez ça 😍 »</span> → <span class="v">✅ « 3 accessoires beauté pratiques »</span></div>
+  <p>Pense comme quelqu'un qui tape : « accessoires cheveux », « cadeau beauté », « produits beauté abordables ». Ta vidéo doit répondre à une intention.</p>
+  <div class="mission"><span class="mtag">📱 Mission</span><p>Trouve 10 recherches TikTok dans ta niche. Pour chacune : recherche → produit correspondant → idée vidéo.</p></div>`,
+  goal:"J'ai mappé 10 recherches → idées",gsub:"Validation du niveau 7"},
+
+ {n:8,zone:"Utiliser l'IA",title:"L'IA comme assistant",body:`
+  <p>L'IA peut t'aider à : trouver des idées, créer des hooks, améliorer un script, générer des variantes, organiser les produits, analyser les performances.</p>
+  <div class="callout warn" style="margin:12px 0;box-shadow:none;border-width:2px"><h4 style="font-size:14px">L'IA ne doit JAMAIS inventer</h4><ul style="grid-template-columns:1fr 1fr;display:grid"><li>prix</li><li>caractéristiques</li><li>résultats</li><li>avis</li><li>témoignages</li><li>promotions</li></ul></div>
+  <p><b>Règle : l'IA propose. Toi, tu vérifies.</b></p>
+  <div class="mission"><span class="mtag">📱 Mission IA</span><p>Demande 10 idées de vidéos faceless pour un produit (hook · problème · démo · CTA, sans inventer de caractéristique). Choisis les 3 meilleures.</p></div>`,
+  goal:"J'ai généré puis vérifié 10 idées",gsub:"Validation du niveau 8"},
+
+ {n:9,zone:"Comprendre les analytics",title:"Lire les vrais signaux",body:`
+  <p>Beaucoup de vues ≠ bonne vidéo. Regarde : 👀 Views · ⏱️ Watch time · ❤️ Engagement · 🛒 Product clicks · 💰 Sales.</p>
+  <table class="mini"><tr><td><b>Vidéo A</b></td><td>100 000 vues</td><td>0 vente</td></tr><tr><td><b>Vidéo B</b></td><td>10 000 vues</td><td>20 ventes</td></tr></table>
+  <p>La vidéo B est bien plus intéressante commercialement.</p>
+  <div class="mission"><span class="mtag">📱 Mission</span><p>Après publication, crée une fiche : vidéo · produit · views · watch time · likes · comments · shares · clicks · orders · commission.</p></div>`,
+  goal:"J'ai rempli une fiche analytics",gsub:"Validation du niveau 9"},
+
+ {n:10,zone:"Faire des expériences",title:"Tester une variable",body:`
+  <p>Ne change pas tout en même temps. <b>Teste une seule variable.</b></p>
+  <ul><li><b>Test 1</b> — même vidéo, 2 hooks (curiosité vs problème)</li><li><b>Test 2</b> — même produit, 2 angles (démo vs comparaison)</li><li><b>Test 3</b> — même contenu, 2 intros</li></ul>
+  <div class="mission"><span class="mtag">🏆 Mission</span><p>1 produit × 3 hooks = 3 vidéos. Puis compare les résultats.</p></div>`,
+  goal:"J'ai lancé un test 1 produit × 3 hooks",gsub:"Validation du niveau 10"},
+
+ {n:11,zone:"Trouver un winner",title:"Le signal intéressant",body:`
+  <p>Un <b>winner</b> = un contenu ou produit qui donne de meilleurs résultats que tes autres tests.</p>
+  <div class="example-box">Vidéo 1 → ⭐ · Vidéo 2 → ⭐⭐⭐⭐⭐ · Vidéo 3 → ⭐⭐ <br>→ La vidéo 2 mérite une nouvelle expérience.</div>
+  <p>Ne dis pas « cette vidéo est devenue virale ». Dis : <b>« cette vidéo a donné un signal intéressant »</b> — puis teste encore.</p>
+  <div class="mission"><span class="mtag">📱 Mission</span><p>Identifie ton meilleur signal parmi tes tests et relance une expérience dessus.</p></div>`,
+  goal:"J'ai identifié un winner et relancé un test",gsub:"Validation du niveau 11"},
+
+ {n:12,zone:"Construire une mini-machine",title:"Ton tableau mobile",body:`
+  <p>Quand tu comprends le processus, organise-le dans une app mobile.</p>
+  <div class="flow">Produit <b>↓</b> Idée <b>↓</b> Hook <b>↓</b> Script <b>↓</b> Vidéo <b>↓</b> Publication <b>↓</b> Analytics <b>↓</b> Test</div>
+  <h5>🗂️ 5 colonnes</h5>
+  <ul><li>💡 IDEAS</li><li>🎬 TO CREATE</li><li>👀 QA</li><li>📤 PUBLISHED</li><li>🏆 WINNERS</li></ul>
+  <p>Chaque vidéo = une carte (produit · hook · format · statut).</p>
+  <div class="mission"><span class="mtag">📱 Mission</span><p>Crée ton board à 5 colonnes et place tes vidéos en cours dedans.</p></div>`,
+  goal:"J'ai construit mon board à 5 colonnes",gsub:"Validation du niveau 12"},
+
+ {n:13,zone:"Passer à l'ordinateur ?",title:"Téléphone d'abord",body:`
+  <p><b>Pas au début.</b> Le téléphone suffit pour : TikTok, recherche, tournage, montage, publication, analytics.</p>
+  <h5>💻 L'ordinateur, plus tard, pour</h5>
+  <ul><li>Supabase</li><li>dashboard</li><li>automatisation</li><li>GitHub</li><li>Vercel</li><li>analytics avancées</li></ul>
+  <div class="mission"><span class="mtag">📱 Mission</span><p>Note honnêtement : est-ce que ton système mobile tourne assez bien pour justifier un ordinateur ? Si non, reste sur mobile.</p></div>`,
+  goal:"J'ai décidé (mobile vs ordinateur) en conscience",gsub:"Validation du niveau 13"},
+
+ {n:14,zone:"Ton propre Dashboard",title:"TikTok Affiliate Dashboard",body:`
+  <p>Quand le système fonctionne, construis ton tableau de bord.</p>
+  <div class="flow" style="background:#1a1420;color:#fff">📱 <b style="color:var(--lime)">TIKTOK AFFILIATE DASHBOARD</b><br>🎬 Videos · 👀 Views · 🛒 Clicks · 💰 Commission · 🏆 Winner</div>
+  <p>Puis ajoute les vues : Products · Videos · Analytics · Experiments · Winners.</p>
+  <div class="callout good" style="margin:12px 0;box-shadow:none"><h4 style="font-size:14px">🚀 Étape suivante</h4><p style="font-weight:600;font-size:13.5px;padding-left:0">TikTok + AI + Supabase + Next.js + Vercel + Analytics = ton propre <b>Creator OS mobile</b>. Mais pas avant d'avoir validé le contenu manuellement.</p></div>
+  <div class="mission"><span class="mtag">🏆 Mission finale</span><p>Assemble ton dashboard (même simple) qui réunit produits, vidéos, analytics, expériences et winners au même endroit.</p></div>`,
+  goal:"J'ai construit mon premier dashboard",gsub:"Validation du niveau 14 — 💎 Creator !"},
+];
+
+const WEEKS=[
+ {t:"Semaine 1 — Explorer",tasks:["Choisir une niche","Observer TikTok","Trouver 30 produits","Trouver 30 recherches","Trouver 30 hooks"]},
+ {t:"Semaine 2 — Créer",tasks:["Créer 10 scripts","Créer 10 vidéos","Tester plusieurs formats","Apprendre le montage"]},
+ {t:"Semaine 3 — Mesurer",tasks:["Observer les analytics","Identifier les meilleurs hooks","Identifier les meilleurs formats","Identifier les produits intéressants"]},
+ {t:"Semaine 4 — Optimiser",tasks:["Refaire les meilleures vidéos","Tester de nouveaux hooks","Tester de nouveaux angles","Construire les premiers templates"]},
+];
+
+const STORE_KEY="tsa_progress_v1";
+let state={};
+try{const raw=localStorage.getItem(STORE_KEY);if(raw)state=JSON.parse(raw)||{};}catch(e){state={};}
+function save(){try{localStorage.setItem(STORE_KEY,JSON.stringify(state));}catch(e){}}
+
+// Build lessons
+const lc=document.getElementById("lessons");
+LESSONS.forEach(L=>{
+  const id="lv"+L.n;
+  const bodyId=id+"-body";
+  const el=document.createElement("div");
+  el.className="lesson";
+  el.innerHTML=`
+    <button class="lesson-head" type="button" aria-expanded="false" aria-controls="${bodyId}">
+      <span class="lvl-num" aria-hidden="true">${L.n}</span>
+      <span class="lesson-titles"><span class="lv">Niveau ${L.n} · ${L.zone}</span><span class="lt">${L.title}</span></span>
+      <span class="chev" aria-hidden="true">▼</span>
+    </button>
+    <div class="lesson-body" id="${bodyId}"><div class="lesson-body-inner">
+      ${L.body}
+      <label class="check-goal">
+        <input type="checkbox" data-goal="${id}">
+        <span class="box" aria-hidden="true">✓</span>
+        <span class="goal-txt">${L.goal}<small>${L.gsub}</small></span>
+      </label>
+    </div></div>`;
+  lc.appendChild(el);
+
+  const head=el.querySelector(".lesson-head");
+  const body=el.querySelector(".lesson-body");
+  head.addEventListener("click",()=>{
+    const open=el.classList.toggle("open");
+    head.setAttribute("aria-expanded",open?"true":"false");
+    body.style.maxHeight=open?body.scrollHeight+"px":"0";
+  });
+
+  const cb=el.querySelector("input");
+  if(state[id]){cb.checked=true;el.classList.add("done")}
+  cb.addEventListener("change",e=>{
+    e.stopPropagation();
+    state[id]=cb.checked; save();
+    el.classList.toggle("done",cb.checked);
+    if(el.classList.contains("open"))body.style.maxHeight=body.scrollHeight+"px";
+    updateProgress(cb.checked);
+  });
+  el.querySelector(".check-goal").addEventListener("click",e=>e.stopPropagation());
+});
+
+// Build weeks
+const wc=document.getElementById("weeks");
+WEEKS.forEach((W,wi)=>{
+  const el=document.createElement("div");
+  el.className="week";
+  el.innerHTML=`<h4>${W.t}</h4><div class="tasks">`+
+    W.tasks.map((t,ti)=>{
+      const id=`w${wi}_${ti}`;
+      const ck=state[id]?"checked":"";
+      return `<label class="task"><input type="checkbox" data-task="${id}" ${ck}><span class="tbox">✓</span><span class="tx">${t}</span></label>`;
+    }).join("")+`</div>`;
+  wc.appendChild(el);
+});
+wc.querySelectorAll("input[data-task]").forEach(cb=>{
+  cb.addEventListener("change",()=>{state[cb.dataset.task]=cb.checked;save()});
+});
+
+// Progress
+const RANKS=[
+  {min:0,badge:"🌱",label:"Débutant — valide ta 1ère leçon pour démarrer"},
+  {min:1,badge:"🥉",label:"Bronze — tu sais trouver, créer, publier, lire les analytics"},
+  {min:5,badge:"🥈",label:"Silver — niche, SEO, tests de hooks, comparaison"},
+  {min:9,badge:"🥇",label:"Gold — système de contenu, expériences, winners"},
+  {min:12,badge:"💎",label:"Creator — workflow, IA, automatisation, décisions data"},
+];
+function updateProgress(celebrate){
+  const total=LESSONS.length;
+  const done=LESSONS.filter(L=>state["lv"+L.n]).length;
+  const pct=Math.round(done/total*100);
+  document.getElementById("pct").textContent=pct+"%";
+  document.getElementById("count").textContent=`${done} / ${total} niveaux validés`;
+  document.getElementById("barfill").style.width=pct+"%";
+  let r=RANKS[0];
+  RANKS.forEach(x=>{if(done>=x.min)r=x});
+  document.getElementById("rankBadge").textContent=r.badge;
+  document.getElementById("rankText").textContent="Rang actuel : "+r.label;
+  if(celebrate&&done===total)burst();
+}
+function burst(){
+  if(window.matchMedia&&window.matchMedia("(prefers-reduced-motion:reduce)").matches)return;
+  const emojis=["🎉","🏆","💎","✨","🚀"];
+  for(let i=0;i<28;i++){
+    const s=document.createElement("div");
+    s.textContent=emojis[i%emojis.length];
+    s.style.cssText=`position:fixed;left:${Math.random()*100}vw;top:-40px;font-size:${18+Math.random()*22}px;z-index:9999;pointer-events:none;transition:transform 2.2s ease-in,opacity 2.2s ease-in`;
+    document.body.appendChild(s);
+    requestAnimationFrame(()=>{s.style.transform=`translateY(${100+Math.random()*20}vh) rotate(${Math.random()*720}deg)`;s.style.opacity="0"});
+    setTimeout(()=>s.remove(),2300);
+  }
+}
+
+document.getElementById("resetBtn").addEventListener("click",()=>{
+  if(confirm("Réinitialiser toute ta progression ?")){
+    state={};save();location.reload();
+  }
+});
+
+// ===== SAUVEGARDE HORS LIGNE (fichier .html autonome) =====
+function toast(msg){
+  const t=document.getElementById("toast");
+  t.textContent=msg;t.classList.add("show");
+  clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove("show"),3200);
+}
+function buildCourseHTML(){
+  // Clone du document actuel
+  const clone=document.documentElement.cloneNode(true);
+  // Retire les éléments d'export inutiles dans la copie
+  clone.querySelectorAll("#fabSave,#toast").forEach(n=>n.remove());
+  // Retire les liens PWA : le fichier .html unique n'a pas de manifest/icône à côté
+  clone.querySelectorAll('link[rel="manifest"],link[rel="icon"],link[rel="apple-touch-icon"]').forEach(n=>n.remove());
+  // Vide les conteneurs générés par JS pour éviter des doublons au rechargement
+  const cl=clone.querySelector("#lessons"); if(cl) cl.innerHTML="";
+  const cw=clone.querySelector("#weeks"); if(cw) cw.innerHTML="";
+  // Réinitialise les zones de transfert / sauvegarde manuelle
+  clone.querySelectorAll("#exportCode,#importCode,#manualCode").forEach(t=>{t.value="";});
+  const ms=clone.querySelector("#manualSave"); if(ms) ms.style.display="none";
+  // Retire d'éventuels confettis en cours
+  clone.querySelectorAll("body > div").forEach(n=>{
+    if(n.textContent&&/^[🎉🏆💎✨🚀]$/.test(n.textContent.trim()))n.remove();
+  });
+  // Injecte l'état de progression courant pour l'ouverture hors ligne
+  const seed=clone.querySelector("head").appendChild(document.createElement("script"));
+  seed.textContent=`try{localStorage.setItem(${JSON.stringify(STORE_KEY)},${JSON.stringify(JSON.stringify(state))})}catch(e){}`;
+  return "<!DOCTYPE html>\n"+clone.outerHTML;
+}
+
+async function downloadCourse(){
+  const html=buildCourseHTML();
+  const stamp=new Date().toISOString().slice(0,10);
+  const filename=`TikTok-Shop-Academy_${stamp}.html`;
+  const blob=new Blob([html],{type:"text/html;charset=utf-8"});
+
+  // 1) Partage natif (idéal sur mobile : "Enregistrer dans Fichiers", envoyer, etc.)
+  try{
+    if(navigator.canShare){
+      const file=new File([blob],filename,{type:"text/html"});
+      if(navigator.canShare({files:[file]})){
+        await navigator.share({files:[file],title:"TikTok Shop Academy"});
+        toast("✅ Cours partagé — choisis « Enregistrer » pour le garder hors ligne");
+        return;
+      }
+    }
+  }catch(e){ /* annulé ou non supporté → on continue */ }
+
+  // 2) Téléchargement classique via lien <a download>
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  a.href=url;a.download=filename;a.rel="noopener";
+  document.body.appendChild(a);
+  let clicked=false;
+  try{a.click();clicked=true;}catch(e){clicked=false;}
+  a.remove();
+
+  // 3) Repli fiable en sandbox : ouvrir dans un nouvel onglet
+  //    (l'utilisateur fait alors "Partager / Enregistrer la page")
+  setTimeout(()=>{
+    let win=null;
+    try{win=window.open(url,"_blank");}catch(e){win=null;}
+    if(win){
+      toast("📄 Cours ouvert dans un onglet — menu ⋯ puis « Partager » ou « Enregistrer »");
+    }else if(clicked){
+      toast("✅ Téléchargement lancé — vérifie tes fichiers");
+    }else{
+      // 4) Dernier repli : afficher la zone d'export texte
+      showManualSave(html);
+      toast("⚠️ Téléchargement bloqué — copie le cours ci-dessous");
+    }
+    setTimeout(()=>URL.revokeObjectURL(url),60000);
+  },300);
+}
+
+function showManualSave(html){
+  const box=document.getElementById("manualSave");
+  box.style.display="block";
+  document.getElementById("manualCode").value=html;
+  box.scrollIntoView({behavior:"smooth",block:"center"});
+}
+
+document.getElementById("saveBtn").addEventListener("click",downloadCourse);
+document.getElementById("fabSave").addEventListener("click",downloadCourse);
+
+document.getElementById("copyManual").addEventListener("click",async()=>{
+  const ta=document.getElementById("manualCode");
+  toast(await copyText(ta.value)?"📋 Fichier copié — colle-le et enregistre en .html":"⚠️ Sélectionne le texte et copie-le à la main");
+});
+
+// ===== EXPORT / IMPORT DE LA PROGRESSION =====
+// Encodage/décodage UTF-8 (émojis, accents) → base64, via TextEncoder/TextDecoder
+function encodeState(obj){
+  const bytes=new TextEncoder().encode(JSON.stringify(obj));
+  let bin="";
+  bytes.forEach(b=>bin+=String.fromCharCode(b));
+  return btoa(bin);
+}
+function decodeState(code){
+  const bin=atob(code.trim());
+  const bytes=Uint8Array.from(bin,c=>c.charCodeAt(0));
+  return JSON.parse(new TextDecoder().decode(bytes));
+}
+
+// Copie robuste (Clipboard API moderne + repli sélection)
+async function copyText(text){
+  try{
+    if(navigator.clipboard&&window.isSecureContext){
+      await navigator.clipboard.writeText(text);return true;
+    }
+  }catch(e){/* repli ci-dessous */}
+  const ta=document.createElement("textarea");
+  ta.value=text;ta.style.position="fixed";ta.style.opacity="0";
+  document.body.appendChild(ta);ta.focus();ta.select();
+  let ok=false;try{ok=document.execCommand("copy");}catch(e){ok=false;}
+  ta.remove();return ok;
+}
+
+// Onglets Exporter / Importer
+const syncTabs=document.querySelectorAll(".sync-tab");
+syncTabs.forEach(tab=>{
+  tab.addEventListener("click",()=>{
+    syncTabs.forEach(t=>{t.classList.remove("active");t.setAttribute("aria-selected","false");});
+    document.querySelectorAll(".sync-pane").forEach(p=>{p.classList.remove("active");p.hidden=true;});
+    tab.classList.add("active");tab.setAttribute("aria-selected","true");
+    const pane=document.getElementById("pane-"+tab.dataset.pane);
+    pane.classList.add("active");pane.hidden=false;
+  });
+});
+
+document.getElementById("genCode").addEventListener("click",()=>{
+  const code=encodeState(state);
+  document.getElementById("exportCode").value=code;
+  toast("Code généré 👇 copie-le sur ton autre téléphone");
+});
+
+document.getElementById("copyCode").addEventListener("click",async()=>{
+  const ta=document.getElementById("exportCode");
+  if(!ta.value){toast("Génère d'abord ton code");return;}
+  toast(await copyText(ta.value)?"📋 Code copié":"⚠️ Copie manuelle : sélectionne le texte");
+});
+
+document.getElementById("applyCode").addEventListener("click",()=>{
+  const raw=document.getElementById("importCode").value;
+  if(!raw.trim()){toast("Colle d'abord ton code");return;}
+  let incoming;
+  try{incoming=decodeState(raw);}
+  catch(e){toast("❌ Code invalide — vérifie le copier-coller");return;}
+  if(typeof incoming!=="object"||incoming===null||Array.isArray(incoming)){toast("❌ Code invalide");return;}
+  if(!confirm("Remplacer ta progression actuelle par le code importé ?"))return;
+  state=incoming;save();
+  toast("✅ Progression importée");
+  setTimeout(()=>location.reload(),700);
+});
+
+// Recalcule la hauteur des leçons ouvertes après rotation / redimensionnement
+let resizeT;
+window.addEventListener("resize",()=>{
+  clearTimeout(resizeT);
+  resizeT=setTimeout(()=>{
+    document.querySelectorAll(".lesson.open .lesson-body").forEach(b=>{
+      b.style.maxHeight=b.scrollHeight+"px";
+    });
+  },150);
+});
+
+updateProgress(false);
+
+// ===== PWA : installable + cache hors ligne (uniquement si hébergé) =====
+// En file:// ou blob: (fichier .html unique), on ne tente rien : le cours reste
+// autonome et hors ligne par nature. Le service worker n'a de sens que servi via http(s).
+if("serviceWorker" in navigator && (location.protocol==="https:" || location.protocol==="http:")){
+  window.addEventListener("load",()=>{
+    navigator.serviceWorker.register("sw.js").catch(()=>{ /* silencieux : pas de PWA, le site marche quand même */ });
+  });
+}
+</script>
+</body>
+</html>
